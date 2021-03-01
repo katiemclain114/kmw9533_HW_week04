@@ -7,13 +7,17 @@ using UnityEngine.UI;
 
 public class questManager : MonoBehaviour
 {
-    public static questManager instance;
+    public static questManager instance; //instance for singleton 
+    
+    //file and file path
     private const string FILE_QUESTS = "/quests.csv";
     private string FILE_PATH_QUESTS;
 
+    //text variables
     public Text questNameText;
     public Text questCompletedText;
 
+    //list of all quests
     public List<Quest> quests = new List<Quest>();
 
     // private Quest tempQuest = new Quest();
@@ -50,13 +54,17 @@ public class questManager : MonoBehaviour
 
     private void Awake()
     {
+        //set instance (only one scene so no loadonscene stuff
         instance = this;
         
     }
 
     private void Start()
     {
+        //set up file path
         FILE_PATH_QUESTS = Application.dataPath + FILE_QUESTS;
+        
+        //set the initial ui text and fill in quest list from file
         string[] questData = File.ReadAllText(FILE_PATH_QUESTS).Split('\n');
         for (int i = 0; i < questData.Length - 1; i++)
         {
@@ -80,14 +88,7 @@ public class questManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log(quests.Count);
-        }
-    }
-
+    //called to update the UI text to make it match the information in quests
     void FileToText()
     {
         questNameText.text = "";
@@ -108,6 +109,8 @@ public class questManager : MonoBehaviour
             }
         }
     }
+    
+    //updates the csv file with correct information on quests
     public void UpdateFile()
     {
         string questData = "";

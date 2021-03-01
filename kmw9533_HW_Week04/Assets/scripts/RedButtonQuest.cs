@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class RedButtonQuest : MonoBehaviour
 {
-    private int questNum = 0;
-    private void Start()
-    {
-        
-    }
+    private int questNum = 0;//finds the quest in quests list that is the click red button quest
 
     private void Update()
     {
+        //always updating where questNum is in case of change
         GetQuestNum();
+        
+        //if the quest is completed then the red button is not active
         if (questManager.instance.quests[questNum].completed == 0)
         {
             gameObject.SetActive(true);
@@ -24,6 +23,8 @@ public class RedButtonQuest : MonoBehaviour
         }
     }
 
+    
+    //function to find the int of red button quest in quests
     public void GetQuestNum()
     {
         for (int i = 0; i < questManager.instance.quests.Count; i++)
@@ -36,6 +37,7 @@ public class RedButtonQuest : MonoBehaviour
         }
     }
 
+    //function for when player clicks red button
     public void RedButtonClick()
     {
         questManager.instance.quests[questNum].completed = 1;
